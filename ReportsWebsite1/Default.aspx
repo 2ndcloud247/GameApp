@@ -35,7 +35,32 @@
 </div>
 
         <asp:Label ID="lblMessage" runat="server" CssClass="text-success fw-bold"></asp:Label>
-        <asp:Gridview ID="Grideviewstudent" runat="server" AutoGenerateColumns="false" CssClass="table table-bordered table-striped mt-4"
+
+        <h4 class="mt-5">Student List Table</h4>
+        <div class="table-responsive">
+            <table class="table table-bordered mt-3">
+                <thead class="table-dark">
+                    <tr>
+                        <th>
+                            Student ID
+                        </th>
+                        <th>
+                        Full Name
+                        </th>
+                        <th>Age</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                    
+                </thead>
+                <tbody runat="server" id="tblStudents">
+
+                </tbody>
+
+            </table>
+        </div>
+
+      <%--  <asp:Gridview ID="Grideviewstudent" runat="server" AutoGenerateColumns="false" CssClass="table table-bordered table-striped mt-4"
             DataKeyNames="studentId"
             OnRowEditing="Grideviewstudent_RowEditing"
             OnRowDeleting="Grideviewstudent_RowDeleting">
@@ -47,7 +72,7 @@
                 <asp:CommandField ShowEditButton="true" ShowDeleteButton="true" />
             </Columns>
            
-        </asp:Gridview> 
+        </asp:Gridview> --%>
     </form>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>

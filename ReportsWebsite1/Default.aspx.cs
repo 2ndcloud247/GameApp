@@ -24,13 +24,27 @@ public partial class _Default : System.Web.UI.Page
     }
      public void Load_Student()
     {
+        tblStudents.InnerHtml = string.Empty;
+
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
-            SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM students", conn);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
-            Grideviewstudent.DataSource = dt;
-            Grideviewstudent.DataBind();
+            SqlCommand cmd = new SqlCommand("SELECT * FROM students", conn);
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read()) 
+            { 
+             string row = "<tr>" +
+                "<td>" + reader["studentId"] + "</td>" +
+                "<td>" + reader["FullName"] + "</td>" +
+                "<td>" + reader["Age"] + "</td>" +
+                "<td>" + reader["Email"] + "</td>" +
+                "<td><a href='javascript:void(0);' onclick='editStudent(" + reader["studentId"] + ")'>Edit</a></td>" +
+                "<td><a href='javascript:void(0);' onclick='deleteStudent(" + reader["studentId"] + ")'>Delete</a></td>" +
+                "</tr>";
+
+                tblStudents.InnerHtml += row;
+            }
+
         }
     }
     protected void btnSubmit_Click(object sender, EventArgs e)
@@ -71,28 +85,28 @@ public partial class _Default : System.Web.UI.Page
         hdnId.Value = string.Empty;
         //Load_Student();
     }
-    protected void Grideviewstudent_RowEditing(object sender, GridViewEditEventArgs e)
-    {
-        Grideviewstudent.EditIndex = -1;
-        int studentId = Convert.ToInt32(Grideviewstudent.DataKeys[e.NewEditIndex].Value);
-        using (SqlConnection conn=new SqlConnection(connectionString))
-        {
-            SqlCommand cmd=new SqlCommand("SELECT * FROM students WHERE studentId=@studentId", conn);
-            cmd.Parameters.AddWithValue("@studentId", studentId);
-            conn.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())
-            {
-                txtName.Value = reader["FullName"].ToString();
-                txtAge.Value = reader["Age"].ToString();
-                txtEmail.Value = reader["Email"].ToString();
-                hdnId.Value = reader["studentId"].ToString();
-            }
-        }
-    }
+    //protected void Grideviewstudent_RowEditing(object sender, GridViewEditEventArgs e)
+    //{
+    //    Grideviewstudent.EditIndex = -1;
+    //    int studentId = Convert.ToInt32(Grideviewstudent.DataKeys[e.NewEditIndex].Value);
+    //    using (SqlConnection conn=new SqlConnection(connectionString))
+    //    {
+    //        SqlCommand cmd=new SqlCommand("SELECT * FROM students WHERE studentId=@studentId", conn);
+    //        cmd.Parameters.AddWithValue("@studentId", studentId);
+    //        conn.Open();
+    //        SqlDataReader reader = cmd.ExecuteReader();
+    //        if (reader.Read())
+    //        {
+    //            txtName.Value = reader["FullName"].ToString();
+    //            txtAge.Value = reader["Age"].ToString();
+    //            txtEmail.Value = reader["Email"].ToString();
+    //            hdnId.Value = reader["studentId"].ToString();
+    //        }
+    //    }
+    //}
 
-    protected void Grideviewstudent_RowDeleting(object sender, GridViewDeleteEventArgs e)
-    {
+    //protected void Grideviewstudent_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    //{
 
-    }
+    //}
 }
